@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div>
+      <div>Guess a number from 0 to 100</div>
+      <div id="message"></div>
+      <input type="number" id="guessNumber">
+      <button id="guessButton" onclick="handleClickGuess()">GUESS</button>
+      <div>Past Guesses</div>
+      <div id="pastGuesses"></div>
+    </div>    
+  </body>
+
+  <script>
+    let correctAnswer = Math.floor(Math.random() * Math.floor(100));
+    let pastGuesses = '';
+    let numGuesses = 10
+
+    function handleClickGuess() {
+      let userGuess = parseInt(document.getElementById('guessNumber').value)
+      let message = document.getElementById('message')
+      if (numGuesses === 0) {
+        document.getElementById('guessButton').disabled = true
+        message.innerHTML = 'Sorry you have run out of guesses'
+      }
+      else if (userGuess < correctAnswer) {
+        numGuesses -= 1
+        message.innerHTML = `Sorry your guess is too low. You have ${numGuesses} left`
+        message.style.background = 'red'
+        pastGuesses += `${userGuess}<br>`
+      }
+      else if (userGuess > correctAnswer) {
+        numGuesses -= 1
+        message.innerHTML = `Sorry your guess is too high. You have ${numGuesses} left`
+        message.style.background = 'red'
+        pastGuesses += `${userGuess}<br>`
+      }
+      else if (userGuess === correctAnswer) {
+        numGuesses = 10
+        message.innerHTML = `Congratulations!! ${correctAnswer} is the correct number.`
+        message.style.background = 'lightgreen'
+        pastGuesses = ''
+        correctAnswer = Math.floor(Math.random() * Math.floor(100))
+      }
+      document.getElementById("pastGuesses").innerHTML = pastGuesses
+    };
+  </script>
+</html>
